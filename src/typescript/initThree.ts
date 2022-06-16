@@ -1,8 +1,13 @@
 import * as THREE from "three";
 import { getSpine, loadSpine } from "./loading";
 
+let lastFrameTime = Date.now() / 1000;
+
 // init
 export const initThree = async () => {
+    // for developer tools
+    window.THREE = THREE;
+
     const camera = new THREE.PerspectiveCamera(
         75,
         window.innerWidth / window.innerHeight,
@@ -13,6 +18,10 @@ export const initThree = async () => {
     camera.position.z = 400;
 
     const scene = new THREE.Scene();
+
+    // for developer tools
+    // @ts-ignore
+    window.scene = scene;
 
     const geometry = new THREE.BoxGeometry(200, 200, 200);
     const material = new THREE.MeshBasicMaterial({
@@ -25,20 +34,28 @@ export const initThree = async () => {
 
     const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setAnimationLoop(animation);
 
     await loadSpine("raptor");
     const spineMesh = getSpine("raptor");
 
-    mesh.add(spineMesh);
+    renderer.setAnimationLoop(animation);
+
+    scene.add(spineMesh);
 
     document.body.appendChild(renderer.domElement);
 
-    // animation
+    let lastTime = Date.now();
 
+    // animation
     function animation(time) {
         mesh.rotation.x = time / 2000;
         mesh.rotation.y = time / 1000;
+
+        const now = Date.now() / 1000;
+        const delta = now - lastFrameTime;
+        lastFrameTime = now;
+
+        spineMesh.update(delta);
 
         renderer.render(scene, camera);
     }
