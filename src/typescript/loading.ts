@@ -66,12 +66,21 @@ export const loadSpine = async (name: string) => {
     });
 };
 
-export const loadGLBMesh = (name): Promise<Mesh> => {
+const glbMeshes = {};
+
+export const loadGLBMesh = (name, onProgress?: () => void): Promise<Mesh> => {
     return new Promise((res, rej) => {
+        if (glbMeshes[name]) {
+            res(glbMeshes[name]);
+            return;
+        }
+
         loader.load(
             `${baseUrl}${name}.glb`,
             (gltf) => {
                 gltf.scene.children.forEach((obj) => {
+                    glbMeshes[obj.name] = obj;
+
                     if (obj.name === name) {
                         obj.castShadow = true;
                         res(obj as Mesh);
@@ -80,7 +89,7 @@ export const loadGLBMesh = (name): Promise<Mesh> => {
 
                 rej(new Error(`No mesh found with the name: ${name}`));
             },
-            undefined,
+            onProgress,
             function (error) {
                 console.error(error);
                 rej(error);
