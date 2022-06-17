@@ -1,9 +1,12 @@
 import * as spine from "@esotericsoftware/spine-threejs";
+import { Mesh, Object3D } from "three";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import * as THREE from "three";
 
 let assetManager: spine.AssetManager;
 const baseUrl = "./assets/";
 const spines = {};
+const loader = new GLTFLoader();
 
 const getAssetsManager = () => {
     if (assetManager) {
@@ -60,6 +63,29 @@ export const loadSpine = async (name: string) => {
 
     return new Promise((res) => {
         requestAnimationFrame(loadChecker.bind({}, res));
+    });
+};
+
+export const loadGLBMesh = (name): Promise<Mesh> => {
+    return new Promise((res, rej) => {
+        loader.load(
+            `${baseUrl}${name}.glb`,
+            (gltf) => {
+                gltf.scene.children.forEach((obj) => {
+                    if (obj.name === name) {
+                        obj.castShadow = true;
+                        res(obj as Mesh);
+                    }
+                });
+
+                rej(new Error(`No mesh found with the name: ${name}`));
+            },
+            undefined,
+            function (error) {
+                console.error(error);
+                rej(error);
+            }
+        );
     });
 };
 
