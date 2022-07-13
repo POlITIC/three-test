@@ -1,0 +1,62 @@
+
+initial_win.png
+size: 412, 412
+format: RGBA8888
+filter: Linear, Linear
+repeat: none
+images/sym_03
+  rotate: false
+  xy: 218, 3
+  size: 165, 160
+  orig: 224, 160
+  offset: 31, 0
+  index: -1
+images/sym_04
+  rotate: true
+  xy: 2, 28
+  size: 142, 214
+  orig: 224, 220
+  offset: 39, 4
+  index: -1
+images/sym_05
+  rotate: false
+  xy: 118, 296
+  size: 155, 114
+  orig: 224, 160
+  offset: 35, 22
+  index: -1
+images/sym_06
+  rotate: true
+  xy: 2, 299
+  size: 111, 114
+  orig: 224, 160
+  offset: 57, 22
+  index: -1
+images/sym_07
+  rotate: false
+  xy: 2, 174
+  size: 120, 120
+  orig: 224, 160
+  offset: 51, 17
+  index: -1
+images/sym_08
+  rotate: true
+  xy: 275, 292
+  size: 118, 135
+  orig: 224, 160
+  offset: 55, 10
+  index: -1
+images/sym_09
+  rotate: true
+  xy: 124, 172
+  size: 122, 135
+  orig: 224, 160
+  offset: 51, 9
+  index: -1
+images/sym_10
+  rotate: true
+  xy: 261, 165
+  size: 125, 139
+  orig: 224, 160
+  offset: 51, 8
+  index: -1

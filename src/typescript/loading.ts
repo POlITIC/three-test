@@ -1,7 +1,8 @@
 import * as spine from "@esotericsoftware/spine-threejs";
-import { Mesh, Object3D } from "three";
+import { Mesh, Texture, TextureLoader } from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
-import * as THREE from "three";
+import config from "../config/imagesConfig.json";
+import { KTX2Loader } from "three/examples/jsm/loaders/KTX2Loader";
 
 let assetManager: spine.AssetManager;
 const baseUrl = "./assets/";
@@ -99,3 +100,50 @@ export const loadGLBMesh = (name, onProgress?: () => void): Promise<Mesh> => {
 };
 
 export const getSpine = (name: string) => spines[name];
+
+const getAssetLoadingConfig = (
+    id: string,
+    type: string
+): { id: string; url: string } => {
+    const configs = config[type];
+
+    for (let i = 0; i < configs.length; i++) {
+        const assetConfig = configs[i];
+
+        if (assetConfig.id === id) {
+            return assetConfig;
+        }
+    }
+};
+
+const textures = {};
+
+export const loadTexture = (id: string): Texture => {
+    const config = getAssetLoadingConfig(id, "pngs");
+
+    return (textures[id] = new TextureLoader().load(config.url));
+};
+
+var ktx2Loader = new KTX2Loader();
+ktx2Loader.setTranscoderPath("libs/basis/");
+
+let ktxLoaderActivated = false;
+
+export const loadKTX = (id, renderer): Promise<Texture> => {
+    const config = getAssetLoadingConfig(id, "ktx");
+    if (!ktxLoaderActivated) {
+        ktx2Loader.detectSupport(renderer);
+        ktxLoaderActivated = true;
+    }
+
+    return new Promise((resolve, reject) => {
+        ktx2Loader.load(
+            config.url,
+            (texture) => {
+                resolve(texture);
+            },
+            () => {},
+            reject
+        );
+    });
+};

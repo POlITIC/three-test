@@ -1,0 +1,46 @@
+{
+  "pngs": [
+    {
+      "id": "bigwin",
+      "url": "assets/ktxTest/src/bigwin.png"
+    },
+    {
+      "id": "coins",
+      "url": "assets/ktxTest/src/coins.png"
+    },
+    {
+      "id": "countup_number",
+      "url": "assets/ktxTest/src/countup_number.png"
+    },
+    {
+      "id": "maingame_background",
+      "url": "assets/ktxTest/src/maingame_background.jpg"
+    },
+    {
+      "id": "sym1_stack",
+      "url": "assets/ktxTest/src/sym1_stack.png"
+    }
+  ],
+  "ktx": [
+    {
+      "id": "bigwin",
+      "url": "assets/ktxTest/ktx/bigwin.ktx2"
+    },
+    {
+      "id": "coins",
+      "url": "assets/ktxTest/ktx/coins.ktx2"
+    },
+    {
+      "id": "countup_number",
+      "url": "assets/ktxTest/ktx/countup_number.ktx2"
+    },
+    {
+      "id": "maingame_background",
+      "url": "assets/ktxTest/ktx/maingame_background.ktx2"
+    },
+    {
+      "id": "sym1_stack",
+      "url": "assets/ktxTest/ktx/sym1_stack.ktx2"
+    }
+  ]
+}
